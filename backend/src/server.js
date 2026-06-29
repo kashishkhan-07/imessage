@@ -3,7 +3,7 @@ import cors from "cors";
 
 import "dotenv/config";
 import fs from "fs";
-import path from "patth";
+import path from "path";
 
 import {clerkMiddleware} from "@clerk/express"
 
