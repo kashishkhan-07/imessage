@@ -1,7 +1,7 @@
 import ImageKit ,{toFile} from "@imagekit/nodejs";
 import { Folders } from "@imagekit/nodejs/resources/index.mjs";
 
-const imagekit = new Imagekit({privatekey: process.env.IMAGEKIT_PRIVATE_KEY});
+const imagekit = new ImageKit({privateKey: process.env.IMAGEKIT_PRIVATE_KEY});
 
 function hasImageKitConfig(){
   return Boolean(process.env.IMAGEKIT_PRIVATE_KEY);
