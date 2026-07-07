@@ -46,18 +46,12 @@ export const WALLPAPERS = [
     label: "macOS Graphic",
     url: "/wallpapers/macos-graphic.jpg",
   },
-   
+
   {
     id: "ventura-light",
     category: "abstract",
     label: "Ventura",
     url: "/wallpapers/ventura-light.jpg",
-  },
-  {
-    id: "ventura-dark",
-    category: "abstract",
-    label: "Ventura Dark",
-    url: "/wallpapers/ventura-dark.jpg",
   },
 ];
 
