@@ -1,5 +1,5 @@
 import express from "express";
-import { getUsersForSidebar , getConversationsForSidebar,getMessages,sendMessage } from "../controllers/message.controller.js";
+import { getUsersForSidebar , getConversationsForSidebar,getMessages,sendMessage , deleteMessage} from "../controllers/message.controller.js";
 import {protectRoute} from "../middleware/auth.middleware.js"
 import {upload} from "../middleware/upload.middleware.js"
 
@@ -11,6 +11,8 @@ router.get("/users",getUsersForSidebar);
 router.get("/conversations",getConversationsForSidebar);
 router.get("/:id",getMessages);
 router.post("/send/:id",upload.single("media"),sendMessage);
-//whatever uh send from the frontend younshould have the key media
+//whatever uh send from the frontend you should have the key media
+
+router.delete("/:id", deleteMessage);
 
 export default router;

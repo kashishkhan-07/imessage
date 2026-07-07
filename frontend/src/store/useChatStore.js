@@ -80,27 +80,58 @@ export const useChatStore = create(
         }
       },
 
-      subscribeToMessages: (userId) => {
-        if (!userId) return;
+ deleteMessage: async (messageId) => {
+  try {
+    await axiosInstance.delete(`/messages/${messageId}`);
 
-        const socket = useAuthStore.getState().socket;
-        if (!socket) return;
+    set((state) => ({
+      messages: state.messages.filter(
+        (message) => message.id !== messageId
+      ),
+    }));
 
-        socket.off("newMessage");
-        socket.on("newMessage", (newMessage) => {
-          // if im not the receiver don't do anything just return
-          if (String(newMessage.senderId) !== String(userId)) return;
+    get().getConversations();
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Failed to delete message");
+  }
+},
 
-          set({ messages: [...get().messages, newMessage] });
+    subscribeToMessages: (userId) => {
+  if (!userId) return;
 
-          get().getConversations();
-        });
-      },
+  const socket = useAuthStore.getState().socket;
+  if (!socket) return;
 
-      unsubscribeFromMessages: () => {
-        const socket = useAuthStore.getState().socket;
-        socket?.off("newMessage");
-      },
+  socket.off("newMessage");
+
+  socket.on("newMessage", (newMessage) => {
+    if (String(newMessage.senderId) !== String(userId)) return;
+
+    set({ messages: [...get().messages, newMessage] });
+
+    get().getConversations();
+  });
+
+
+  socket.off("messageDeleted");
+
+  socket.on("messageDeleted", ({ messageId }) => {
+    set((state) => ({
+      messages: state.messages.filter(
+        (message) => message.id !== messageId
+      ),
+    }));
+
+    get().getConversations();
+  });
+},
+
+     unsubscribeFromMessages: () => {
+  const socket = useAuthStore.getState().socket;
+
+  socket?.off("newMessage");
+  socket?.off("messageDeleted");
+},
 
       setSelectedUser: (selectedUser) => set({ selectedUser }),
 
