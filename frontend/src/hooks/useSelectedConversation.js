@@ -21,6 +21,7 @@ export function getInitials(name) {
 function mapUserToConversation({ user, messages, authUser, onlineUsers }) {
   const mappedMessages = messages.map((message) => ({
     id: message._id,
+    _id: message._id,
     role: String(message.senderId) === String(authUser?._id) ? "me" : "them",
     text: message.text || "",
     time: formatMessageTime(message.createdAt),
@@ -46,6 +47,7 @@ export function useSelectedConversation() {
   const conversations = useChatStore((state) => state.conversations);
   const users = useChatStore((state) => state.users);
   const messages = useChatStore((state) => state.messages);
+
 
   const authUser = useAuthStore((state) => state.authUser);
   const onlineUsers = useAuthStore((state) => state.onlineUsers);

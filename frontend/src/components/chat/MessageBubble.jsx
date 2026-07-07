@@ -8,7 +8,7 @@ const IMAGE_TRANSFORM = "q-auto,w-640,f-auto";
 
 export function MessageBubble({ message }) {
   const deleteMessage = useChatStore((state) => state.deleteMessage);
-   
+
   const isOwnMessage = message.role === "me";
   const hasImage = Boolean(message.imageUrl);
   const hasVideo = Boolean(message.videoUrl);
@@ -78,24 +78,15 @@ useEffect(() => {
           {message.time}
         </p>
       </div>
-      {contextMenu.visible && (
+    {contextMenu.visible && (
   <div
-    className="fixed z-50 w-48 rounded-xl border border-gray-200 bg-white py-2 shadow-xl"
+    className="fixed z-50 w-52 max-w-[90vw] rounded-xl border border-gray-200 bg-white py-2 shadow-xl"
     style={{
-      top: contextMenu.y,
-      left: contextMenu.x,
+      top: Math.min(contextMenu.y, window.innerHeight - 120),
+      left: Math.min(contextMenu.x, window.innerWidth - 220),
     }}
   >
-    {/* <button
-      className="w-full px-4 py-2 text-left hover:bg-gray-100"
-      onClick={() => {
-        navigator.clipboard.writeText(message.text || "");
-        setContextMenu({ ...contextMenu, visible: false });
-      }}
-    >
-      📋Copy
-    </button> */}
-
+     
     <button
       className="w-full px-4 py-2 text-left text-red-500 hover:bg-red-50"
       onClick={() => {
